@@ -7,8 +7,8 @@ import pandas as pd
 class Data():
 	"""docstring for Data"""
 	def __init__(self):
-		self.train_df = pd.read_csv('../data/train.csv', header = 0)
-		self.test_df = pd.read_csv('../data/test.csv', header = 0)
+		self.train_df = pd.read_csv('data/train.csv', header = 0)
+		self.test_df = pd.read_csv('data/test.csv', header = 0)
 
 	def getCleanData(self):
 		self.featureCreation()

@@ -1,6 +1,6 @@
 #author: Sina Khorami
 #date: Tue 29 Nov 2016
-#RandomForest Classifier
+#NaiveBayes Classifier
 
 import os
 import sys
@@ -8,25 +8,24 @@ import csv
 
 sys.path.append(os.path.abspath("../"))
 
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import MultinomialNB
 from data_model import Data
 
-class RandomForest():
-	"""docstring for RandomForest"""
-	def __init__(self, num_estimators):
-		self.n_estimators = num_estimators
+class NaiveBayes():
+	"""docstring for NaiveBayes"""
+	def __init__(self):
 		self.result = None
 
 	def classify(self):
 		data = Data()
 		train_data, test_data = data.getCleanData()
-		forest = RandomForestClassifier(n_estimators = self.n_estimators)
-		forest = forest.fit(train_data[0::, 1::], train_data[0::, 0])
-		self.result = forest.predict(test_data)
+		nb = MultinomialNB()
+		nb.fit(train_data[0::, 1::], train_data[0::, 0])
+		self.result = nb.predict(test_data)
 		self.saveResult()
 
 	def saveResult(self):
-		result_file = open("result/randomforestmodel.csv", "wb")
+		result_file = open("result/naivebayesmodel.csv", "wb")
 		result_file_object = csv.writer(result_file)
 		result_file_object.writerow(["PassengerId", "Survived"])
 		passengerId = 892
@@ -35,4 +34,4 @@ class RandomForest():
 			passengerId += 1
 		result_file.close()
 
-		print "RandomForest Prediction Saved Successfully!"
+		print "NaiveBayes Prediction Saved Successfully!"

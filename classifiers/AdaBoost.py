@@ -1,6 +1,6 @@
 #author: Sina Khorami
 #date: Tue 29 Nov 2016
-#RandomForest Classifier
+#AdaBoost Classifier
 
 import os
 import sys
@@ -8,11 +8,11 @@ import csv
 
 sys.path.append(os.path.abspath("../"))
 
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
 from data_model import Data
 
-class RandomForest():
-	"""docstring for RandomForest"""
+class AdaBoost():
+	"""docstring for AdaBoost"""
 	def __init__(self, num_estimators):
 		self.n_estimators = num_estimators
 		self.result = None
@@ -20,13 +20,13 @@ class RandomForest():
 	def classify(self):
 		data = Data()
 		train_data, test_data = data.getCleanData()
-		forest = RandomForestClassifier(n_estimators = self.n_estimators)
-		forest = forest.fit(train_data[0::, 1::], train_data[0::, 0])
-		self.result = forest.predict(test_data)
+		ab = AdaBoostClassifier(n_estimators = self.n_estimators)
+		ab.fit(train_data[0::, 1::], train_data[0::, 0])
+		self.result = ab.predict(test_data)
 		self.saveResult()
 
 	def saveResult(self):
-		result_file = open("result/randomforestmodel.csv", "wb")
+		result_file = open("result/adaboostmodel.csv", "wb")
 		result_file_object = csv.writer(result_file)
 		result_file_object.writerow(["PassengerId", "Survived"])
 		passengerId = 892
@@ -35,4 +35,4 @@ class RandomForest():
 			passengerId += 1
 		result_file.close()
 
-		print "RandomForest Prediction Saved Successfully!"
+		print "AdaBoost Prediction Saved Successfully!"
